@@ -128,6 +128,16 @@ body{
 
 
 
+.cart-error{
+
+    color:#c0392b;
+
+    margin:0 0 10px;
+
+}
+
+
+
 .cart-item{
 
     display:flex;

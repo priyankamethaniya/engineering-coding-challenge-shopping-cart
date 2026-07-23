@@ -6,6 +6,8 @@ function CartPanel({
 
     cart,
 
+    error,
+
     onRemove,
 
     onUpdate
@@ -33,6 +35,16 @@ function CartPanel({
     return (
 
         <div className="cart-panel">
+
+
+            {
+                error &&
+                (
+                    <p className="cart-error">
+                        {error}
+                    </p>
+                )
+            }
 
 
             {

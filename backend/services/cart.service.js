@@ -10,6 +10,10 @@ const productRepository =
 require("../repositories/product.repository");
 
 
+const AppError =
+require("../utils/app-error");
+
+
 
 class CartService{
 
@@ -52,10 +56,29 @@ class CartService{
 
 
 
+        const nextQuantity =
+        existing
+            ? existing.quantity + 1
+            : 1;
+
+
+
+        if(nextQuantity > product.stock){
+
+            throw new AppError(
+                "Not enough stock",
+                400
+            );
+
+        }
+
+
+
         if(existing){
 
 
-            existing.quantity++;
+            existing.quantity =
+            nextQuantity;
 
             return existing;
 
@@ -90,7 +113,7 @@ class CartService{
 
 
 
-    update(productId,quantity){
+    async update(productId,quantity){
 
 
 
@@ -118,6 +141,24 @@ class CartService{
             );
 
             return;
+
+        }
+
+
+
+        const product =
+        await productRepository.findById(
+            productId
+        );
+
+
+
+        if(quantity > product.stock){
+
+            throw new AppError(
+                "Not enough stock",
+                400
+            );
 
         }
 

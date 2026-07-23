@@ -11,7 +11,7 @@ console.error(err);
 
 
 
-res.status(500).json({
+res.status(err.statusCode || 500).json({
 
 message:
 err.message ||
