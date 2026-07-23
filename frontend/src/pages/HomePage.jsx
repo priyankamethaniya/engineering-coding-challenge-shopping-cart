@@ -40,7 +40,9 @@ function HomePage(){
 
         remove,
 
-        update
+        update,
+
+        error:cartError
 
     } = useCart();
 
@@ -144,6 +146,8 @@ function HomePage(){
                     <CartPanel
 
                         cart={cart}
+
+                        error={cartError}
 
                         onRemove={remove}
 

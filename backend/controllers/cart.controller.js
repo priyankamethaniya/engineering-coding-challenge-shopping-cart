@@ -66,13 +66,13 @@ class CartController{
 
 
 
-    update(req,res,next){
+    async update(req,res,next){
 
 
         try{
 
 
-            service.update(
+            await service.update(
 
                 Number(req.params.id),
 

@@ -15,6 +15,9 @@ from "../api/cart.api";
 function useCart(){
     const [cart,setCart]
         = useState([]);
+    const [error,setError]
+        = useState(null);
+
     async function loadCart(){
         const data =
             await getCart();
@@ -22,8 +25,17 @@ function useCart(){
     }
 
     async function add(productId){
-        await addCart(productId);
-        await loadCart();
+        try{
+            setError(null);
+            await addCart(productId);
+            await loadCart();
+        }
+        catch(err){
+            setError(
+                err.response?.data?.message
+                    || err.message
+            );
+        }
     }
 
     async function remove(productId){
@@ -35,11 +47,20 @@ function useCart(){
         productId,
         quantity
     ){
-        await updateCart(
-            productId,
-            quantity
-        );
-        await loadCart();
+        try{
+            setError(null);
+            await updateCart(
+                productId,
+                quantity
+            );
+            await loadCart();
+        }
+        catch(err){
+            setError(
+                err.response?.data?.message
+                    || err.message
+            );
+        }
     }
 
     useEffect(()=>{
@@ -50,7 +71,8 @@ function useCart(){
         cart,
         add,
         remove,
-        update
+        update,
+        error
     };
 }
 
