@@ -1,4 +1,4 @@
-const axios = require("axios-native");
+const axios = require("axios");
 
 
 const productClient = axios.create({
