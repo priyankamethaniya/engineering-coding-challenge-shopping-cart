@@ -28,11 +28,11 @@ function useCart(){
         setCart(data);
     }
 
-    async function add(productId){
+    async function runCartAction(apiCall){
         try{
             setActionPending(true);
             setError(null);
-            await addCart(productId);
+            await apiCall();
             await loadCart();
         }
         catch(err){
@@ -46,46 +46,25 @@ function useCart(){
         }
     }
 
-    async function remove(productId){
-        try{
-            setActionPending(true);
-            setError(null);
-            await removeCart(productId);
-            await loadCart();
-        }
-        catch(err){
-            setError(
-                err.response?.data?.message
-                    || err.message
-            );
-        }
-        finally{
-            setActionPending(false);
-        }
+    function add(productId){
+        return runCartAction(() =>
+            addCart(productId)
+        );
     }
 
-    async function update(
+    function remove(productId){
+        return runCartAction(() =>
+            removeCart(productId)
+        );
+    }
+
+    function update(
         productId,
         quantity
     ){
-        try{
-            setActionPending(true);
-            setError(null);
-            await updateCart(
-                productId,
-                quantity
-            );
-            await loadCart();
-        }
-        catch(err){
-            setError(
-                err.response?.data?.message
-                    || err.message
-            );
-        }
-        finally{
-            setActionPending(false);
-        }
+        return runCartAction(() =>
+            updateCart(productId, quantity)
+        );
     }
 
     useEffect(()=>{

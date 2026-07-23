@@ -6,55 +6,31 @@ require("../services/product.service");
 class ProductController{
 
 
-    async getAll(req,res,next){
+    async getAll(req,res){
 
 
-        try{
+        const products =
+        await service.getProducts();
 
 
-            const products =
-            await service.getProducts();
-
-
-
-            res.json(products);
-
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json(products);
 
 
     }
 
 
 
-    async search(req,res,next){
+    async search(req,res){
 
 
-        try{
+        const { q } = req.query;
 
 
-            const { q } = req.query;
+        const products =
+        await service.searchProducts(q);
 
 
-            const products =
-            await service.searchProducts(q);
-
-
-
-            res.json(products);
-
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json(products);
 
 
     }

@@ -10,6 +10,10 @@ const userMiddleware =
 require("../middleware/user.middleware");
 
 
+const asyncHandler =
+require("../utils/async-handler");
+
+
 
 const router =
 express.Router();
@@ -22,28 +26,28 @@ router.use(userMiddleware);
 
 router.get(
 "/",
-controller.getAll
+asyncHandler(controller.getAll)
 );
 
 
 
 router.post(
 "/",
-controller.add
+asyncHandler(controller.add)
 );
 
 
 
 router.delete(
 "/:id",
-controller.remove
+asyncHandler(controller.remove)
 );
 
 
 
 router.patch(
 "/:id",
-controller.update
+asyncHandler(controller.update)
 );
 
 
