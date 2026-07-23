@@ -25,6 +25,23 @@ class ProductService{
     }
 
 
+
+    async searchProducts(query){
+
+
+        if(!query || !query.trim()){
+
+            return await repository.findAll();
+
+        }
+
+
+        return await repository.search(query.trim());
+
+
+    }
+
+
 }
 
 

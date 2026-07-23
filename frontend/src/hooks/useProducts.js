@@ -1,11 +1,13 @@
 import {
     useEffect,
+    useRef,
     useState
 }
 from "react";
 
 import {
-    getProducts
+    getProducts,
+    searchProducts
 }
 from "../api/product.api";
 
@@ -16,11 +18,19 @@ function useProducts(){
         = useState(true);
     const [error,setError]
         = useState(null);
-    async function loadProducts(){
+    const [query,setQuery]
+        = useState("");
+
+    const isFirstRun = useRef(true);
+
+    async function fetchProducts(term){
         try{
             setLoading(true);
+            setError(null);
             const data =
-                await getProducts();
+                term.trim()
+                    ? await searchProducts(term.trim())
+                    : await getProducts();
             setProducts(data);
         }
         catch(err){
@@ -32,14 +42,28 @@ function useProducts(){
             setLoading(false);
         }
     }
+
     useEffect(()=>{
-        loadProducts();
-    },[]);
+        if(isFirstRun.current){
+            isFirstRun.current = false;
+            fetchProducts(query);
+            return;
+        }
+
+        const timer = setTimeout(()=>{
+            fetchProducts(query);
+        },300);
+
+        return ()=> clearTimeout(timer);
+    },[query]);
+
     return {
         products,
         loading,
         error,
-        reload:loadProducts
+        query,
+        setQuery,
+        reload:()=>fetchProducts(query)
     };
 }
 export default useProducts;
