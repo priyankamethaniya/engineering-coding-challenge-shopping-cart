@@ -6,9 +6,17 @@ const controller =
 require("../controllers/cart.controller");
 
 
+const userMiddleware =
+require("../middleware/user.middleware");
+
+
 
 const router =
 express.Router();
+
+
+
+router.use(userMiddleware);
 
 
 

@@ -12,7 +12,9 @@ class CartController{
         try{
 
             const cart =
-            await service.getCart();
+            await service.getCart(
+                req.userId
+            );
 
             res.json(cart);
 
@@ -37,6 +39,7 @@ class CartController{
 
             const item =
             await service.add(
+                req.userId,
                 req.body.productId
             );
 
@@ -63,6 +66,7 @@ class CartController{
         try{
 
             await service.remove(
+                req.userId,
                 Number(req.params.id)
             );
 
@@ -91,6 +95,8 @@ class CartController{
 
 
             await service.update(
+
+                req.userId,
 
                 Number(req.params.id),
 
