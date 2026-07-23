@@ -6,12 +6,22 @@ require("../services/cart.service");
 class CartController{
 
 
-    getAll(req,res){
+    async getAll(req,res,next){
 
 
-        res.json(
-            service.getCart()
-        );
+        try{
+
+            const cart =
+            await service.getCart();
+
+            res.json(cart);
+
+        }
+        catch(error){
+
+            next(error);
+
+        }
 
 
     }
@@ -47,17 +57,25 @@ class CartController{
 
 
 
-    remove(req,res){
+    async remove(req,res,next){
 
 
-        service.remove(
-            Number(req.params.id)
-        );
+        try{
 
+            await service.remove(
+                Number(req.params.id)
+            );
 
-        res.json({
-            success:true
-        });
+            res.json({
+                success:true
+            });
+
+        }
+        catch(error){
+
+            next(error);
+
+        }
 
 
     }

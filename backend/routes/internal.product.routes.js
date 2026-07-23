@@ -2,8 +2,8 @@ const express =
 require("express");
 
 
-const products =
-require("../data/products");
+const pool =
+require("../config/db");
 
 
 
@@ -14,10 +14,24 @@ express.Router();
 
 router.get(
 "/",
-(req,res)=>{
+async (req,res,next)=>{
 
 
-    res.json(products);
+    try{
+
+        const [rows] =
+        await pool.query(
+            "SELECT id, name, price, stock FROM products"
+        );
+
+        res.json(rows);
+
+    }
+    catch(error){
+
+        next(error);
+
+    }
 
 
 });
