@@ -13,6 +13,13 @@ express.Router();
 
 
 router.get(
+"/search",
+controller.search
+);
+
+
+
+router.get(
 "/",
 controller.getAll
 );

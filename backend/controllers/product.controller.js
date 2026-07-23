@@ -32,6 +32,35 @@ class ProductController{
 
 
 
+    async search(req,res,next){
+
+
+        try{
+
+
+            const { q } = req.query;
+
+
+            const products =
+            await service.searchProducts(q);
+
+
+
+            res.json(products);
+
+
+        }
+        catch(error){
+
+            next(error);
+
+        }
+
+
+    }
+
+
+
 }
 
 

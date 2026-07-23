@@ -1,5 +1,7 @@
 import Header from "../components/Header";
 
+import SearchBar from "../components/SearchBar";
+
 import ProductList from "../components/ProductList";
 
 import CartPanel from "../components/CartPanel";
@@ -20,7 +22,11 @@ function HomePage(){
 
         loading,
 
-        error
+        error,
+
+        query,
+
+        setQuery
 
     } = useProducts();
 
@@ -40,30 +46,46 @@ function HomePage(){
 
 
 
+    function renderProducts(){
 
-    if(loading){
+        if(loading){
+
+            return (
+                <h2>
+                    Loading...
+                </h2>
+            );
+
+        }
+
+        if(error){
+
+            return (
+                <h2>
+                    Error: {error}
+                </h2>
+            );
+
+        }
+
+        if(products.length === 0){
+
+            return (
+                <h2>
+                    No products found.
+                </h2>
+            );
+
+        }
 
         return (
+            <ProductList
 
-            <h2>
-                Loading...
-            </h2>
+                products={products}
 
-        );
+                onAdd={add}
 
-    }
-
-
-
-
-    if(error){
-
-        return (
-
-            <h2>
-                Error: {error}
-            </h2>
-
+            />
         );
 
     }
@@ -92,13 +114,17 @@ function HomePage(){
 
 
 
-                    <ProductList
+                    <SearchBar
 
-                        products={products}
+                        value={query}
 
-                        onAdd={add}
+                        onChange={setQuery}
 
                     />
+
+
+
+                    {renderProducts()}
 
 
                 </section>

@@ -74,6 +74,26 @@ body{
 
 
 
+.search-bar{
+
+    width:100%;
+
+    box-sizing:border-box;
+
+    padding:10px;
+
+    margin-bottom:20px;
+
+    border:1px solid #ddd;
+
+    border-radius:8px;
+
+    font-size:14px;
+
+}
+
+
+
 .product-list{
 
     display:grid;

@@ -37,6 +37,29 @@ class ProductRepository{
     }
 
 
+
+    async search(query){
+
+
+        const products =
+            await this.findAll();
+
+
+        const term =
+            query.toLowerCase();
+
+
+        return products.filter(
+            product =>
+            product.name
+                .toLowerCase()
+                .includes(term)
+        );
+
+
+    }
+
+
 }
 
 

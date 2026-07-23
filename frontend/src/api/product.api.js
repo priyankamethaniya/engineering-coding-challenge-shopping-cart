@@ -7,3 +7,13 @@ export async function getProducts(){
 
     return response.data;
 }
+
+export async function searchProducts(query){
+
+    const response =
+        await api.get("/products/search", {
+            params: { q: query }
+        });
+
+    return response.data;
+}
