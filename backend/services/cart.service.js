@@ -41,8 +41,9 @@ class CartService{
 
         if(!product){
 
-            throw new Error(
-                "Product not found"
+            throw new AppError(
+                "Product not found",
+                404
             );
 
         }
@@ -130,6 +131,21 @@ class CartService{
 
 
 
+        if(
+            typeof quantity !== "number" ||
+            Number.isNaN(quantity) ||
+            quantity < 0
+        ){
+
+            throw new AppError(
+                "Invalid quantity",
+                400
+            );
+
+        }
+
+
+
         const item =
         await cartRepository.findByProductId(
             userId,
@@ -140,15 +156,16 @@ class CartService{
 
         if(!item){
 
-            throw new Error(
-                "Cart item not found"
+            throw new AppError(
+                "Cart item not found",
+                404
             );
 
         }
 
 
 
-        if(quantity<=0){
+        if(quantity===0){
 
             await cartRepository.delete(
                 userId,
