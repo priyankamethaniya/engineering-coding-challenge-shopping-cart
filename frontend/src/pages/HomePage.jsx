@@ -36,6 +36,10 @@ function HomePage(){
 
         cart,
 
+        loading:cartLoading,
+
+        actionPending,
+
         add,
 
         remove,
@@ -54,7 +58,7 @@ function HomePage(){
 
             return (
                 <h2>
-                    Loading...
+                    Loading products...
                 </h2>
             );
 
@@ -64,7 +68,9 @@ function HomePage(){
 
             return (
                 <h2>
-                    Error: {error}
+                    Unable to load products.
+                    <br />
+                    Please try again.
                 </h2>
             );
 
@@ -84,6 +90,8 @@ function HomePage(){
             <ProductList
 
                 products={products}
+
+                disabled={actionPending}
 
                 onAdd={add}
 
@@ -146,6 +154,10 @@ function HomePage(){
                     <CartPanel
 
                         cart={cart}
+
+                        loading={cartLoading}
+
+                        actionPending={actionPending}
 
                         error={cartError}
 

@@ -2,6 +2,8 @@ function CartItem({
 
     item,
 
+    disabled,
+
     onRemove,
 
     onUpdate
@@ -38,6 +40,8 @@ function CartItem({
 
                     <button
 
+                        disabled={disabled}
+
                         onClick={() =>
                             onUpdate(
                                 item.productId,
@@ -63,6 +67,8 @@ function CartItem({
 
                     <button
 
+                        disabled={disabled}
+
                         onClick={() =>
                             onUpdate(
                                 item.productId,
@@ -86,6 +92,8 @@ function CartItem({
 
 
             <button
+
+                disabled={disabled}
 
                 onClick={() =>
                     onRemove(
