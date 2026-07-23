@@ -3,11 +3,6 @@ require("../config/db");
 
 
 
-const DEFAULT_USER_ID =
-"guest";
-
-
-
 function toCartItem(row){
 
     return {
@@ -29,13 +24,13 @@ function toCartItem(row){
 class CartRepository{
 
 
-    async findAll(){
+    async findAll(userId){
 
 
         const [rows] =
         await pool.query(
             "SELECT * FROM cart_items WHERE user_id = ?",
-            [DEFAULT_USER_ID]
+            [userId]
         );
 
 
@@ -46,7 +41,7 @@ class CartRepository{
 
 
 
-    async save(item){
+    async save(userId,item){
 
 
         await pool.query(
@@ -56,7 +51,7 @@ class CartRepository{
              VALUES (?, ?, ?, ?, ?)`,
 
             [
-                DEFAULT_USER_ID,
+                userId,
                 item.productId,
                 item.name,
                 item.price,
@@ -70,13 +65,13 @@ class CartRepository{
 
 
 
-    async findByProductId(id){
+    async findByProductId(userId,id){
 
 
         const [rows] =
         await pool.query(
             "SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?",
-            [DEFAULT_USER_ID, id]
+            [userId, id]
         );
 
 
@@ -89,12 +84,12 @@ class CartRepository{
 
 
 
-    async updateQuantity(id,quantity){
+    async updateQuantity(userId,id,quantity){
 
 
         await pool.query(
             "UPDATE cart_items SET quantity = ? WHERE user_id = ? AND product_id = ?",
-            [quantity, DEFAULT_USER_ID, id]
+            [quantity, userId, id]
         );
 
 
@@ -102,12 +97,12 @@ class CartRepository{
 
 
 
-    async delete(id){
+    async delete(userId,id){
 
 
         await pool.query(
             "DELETE FROM cart_items WHERE user_id = ? AND product_id = ?",
-            [DEFAULT_USER_ID, id]
+            [userId, id]
         );
 
 
