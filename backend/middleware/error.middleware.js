@@ -1,3 +1,8 @@
+const AppError =
+require("../utils/app-error");
+
+
+
 module.exports =
 (
 err,
@@ -11,11 +16,29 @@ console.error(err);
 
 
 
-res.status(err.statusCode || 500).json({
+if(err instanceof AppError){
 
-message:
-err.message ||
-"Internal Server Error"
+    return res.status(err.statusCode).json({
+        message: err.message
+    });
+
+}
+
+
+
+if(err.type === "entity.parse.failed"){
+
+    return res.status(400).json({
+        message: "Invalid request body"
+    });
+
+}
+
+
+
+res.status(500).json({
+
+message: "Internal server error"
 
 });
 
