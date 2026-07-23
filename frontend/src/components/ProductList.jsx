@@ -6,6 +6,8 @@ function ProductList({
 
     products,
 
+    disabled,
+
     onAdd
 
 }){
@@ -24,6 +26,8 @@ function ProductList({
                         key={product.id}
 
                         product={product}
+
+                        disabled={disabled}
 
                         onAdd={onAdd}
 

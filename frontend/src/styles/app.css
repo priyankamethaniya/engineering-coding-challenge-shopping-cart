@@ -138,6 +138,28 @@ body{
 
 
 
+.cart-status{
+
+    color:#888;
+
+    margin:0 0 10px;
+
+    font-size:14px;
+
+}
+
+
+
+button:disabled{
+
+    opacity:0.5;
+
+    cursor:not-allowed;
+
+}
+
+
+
 .cart-item{
 
     display:flex;

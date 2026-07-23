@@ -15,6 +15,10 @@ from "../api/cart.api";
 function useCart(){
     const [cart,setCart]
         = useState([]);
+    const [loading,setLoading]
+        = useState(true);
+    const [actionPending,setActionPending]
+        = useState(false);
     const [error,setError]
         = useState(null);
 
@@ -26,6 +30,7 @@ function useCart(){
 
     async function add(productId){
         try{
+            setActionPending(true);
             setError(null);
             await addCart(productId);
             await loadCart();
@@ -36,11 +41,27 @@ function useCart(){
                     || err.message
             );
         }
+        finally{
+            setActionPending(false);
+        }
     }
 
     async function remove(productId){
-        await removeCart(productId);
-        await loadCart();
+        try{
+            setActionPending(true);
+            setError(null);
+            await removeCart(productId);
+            await loadCart();
+        }
+        catch(err){
+            setError(
+                err.response?.data?.message
+                    || err.message
+            );
+        }
+        finally{
+            setActionPending(false);
+        }
     }
 
     async function update(
@@ -48,6 +69,7 @@ function useCart(){
         quantity
     ){
         try{
+            setActionPending(true);
             setError(null);
             await updateCart(
                 productId,
@@ -61,14 +83,22 @@ function useCart(){
                     || err.message
             );
         }
+        finally{
+            setActionPending(false);
+        }
     }
 
     useEffect(()=>{
-        loadCart();
+        loadCart()
+            .finally(()=>
+                setLoading(false)
+            );
     },[]);
 
     return {
         cart,
+        loading,
+        actionPending,
         add,
         remove,
         update,

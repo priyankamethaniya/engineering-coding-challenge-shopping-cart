@@ -1,5 +1,6 @@
 function ProductCard({
     product,
+    disabled,
     onAdd
 }){
     return (
@@ -14,6 +15,7 @@ function ProductCard({
                 Stock: {product.stock}
             </p>
             <button
+                disabled={disabled}
                 onClick={() =>
                     onAdd(product.id)
                 }

@@ -6,6 +6,10 @@ function CartPanel({
 
     cart,
 
+    loading,
+
+    actionPending,
+
     error,
 
     onRemove,
@@ -48,6 +52,30 @@ function CartPanel({
 
 
             {
+                actionPending &&
+                (
+                    <p className="cart-status">
+                        Updating cart...
+                    </p>
+                )
+            }
+
+
+            {
+                loading
+
+                ?
+
+                (
+
+                    <p>
+                        Loading cart...
+                    </p>
+
+                )
+
+                :
+
                 cart.length === 0
 
                 ?
@@ -55,7 +83,7 @@ function CartPanel({
                 (
 
                     <p>
-                        Cart is empty.
+                        Your cart is empty.
                     </p>
 
                 )
@@ -71,6 +99,8 @@ function CartPanel({
                             key={item.productId}
 
                             item={item}
+
+                            disabled={actionPending}
 
                             onRemove={onRemove}
 
