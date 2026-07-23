@@ -15,6 +15,21 @@ require("../utils/app-error");
 
 
 
+function assertInStock(quantity,product){
+
+    if(quantity > product.stock){
+
+        throw new AppError(
+            "Not enough stock",
+            400
+        );
+
+    }
+
+}
+
+
+
 class CartService{
 
 
@@ -65,14 +80,7 @@ class CartService{
 
 
 
-        if(nextQuantity > product.stock){
-
-            throw new AppError(
-                "Not enough stock",
-                400
-            );
-
-        }
+        assertInStock(nextQuantity,product);
 
 
 
@@ -185,14 +193,7 @@ class CartService{
 
 
 
-        if(quantity > product.stock){
-
-            throw new AppError(
-                "Not enough stock",
-                400
-            );
-
-        }
+        assertInStock(quantity,product);
 
 
 

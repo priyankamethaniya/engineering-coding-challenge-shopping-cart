@@ -6,24 +6,15 @@ require("../services/cart.service");
 class CartController{
 
 
-    async getAll(req,res,next){
+    async getAll(req,res){
 
 
-        try{
+        const cart =
+        await service.getCart(
+            req.userId
+        );
 
-            const cart =
-            await service.getCart(
-                req.userId
-            );
-
-            res.json(cart);
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json(cart);
 
 
     }
@@ -31,28 +22,17 @@ class CartController{
 
 
 
-    async add(req,res,next){
+    async add(req,res){
 
 
-        try{
+        const item =
+        await service.add(
+            req.userId,
+            req.body.productId
+        );
 
 
-            const item =
-            await service.add(
-                req.userId,
-                req.body.productId
-            );
-
-
-            res.json(item);
-
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json(item);
 
 
     }
@@ -60,26 +40,17 @@ class CartController{
 
 
 
-    async remove(req,res,next){
+    async remove(req,res){
 
 
-        try{
+        await service.remove(
+            req.userId,
+            Number(req.params.id)
+        );
 
-            await service.remove(
-                req.userId,
-                Number(req.params.id)
-            );
-
-            res.json({
-                success:true
-            });
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json({
+            success:true
+        });
 
 
     }
@@ -88,34 +59,23 @@ class CartController{
 
 
 
-    async update(req,res,next){
+    async update(req,res){
 
 
-        try{
+        await service.update(
+
+            req.userId,
+
+            Number(req.params.id),
+
+            req.body.quantity
+
+        );
 
 
-            await service.update(
-
-                req.userId,
-
-                Number(req.params.id),
-
-                req.body.quantity
-
-            );
-
-
-            res.json({
-                success:true
-            });
-
-
-        }
-        catch(error){
-
-            next(error);
-
-        }
+        res.json({
+            success:true
+        });
 
 
     }

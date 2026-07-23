@@ -2,7 +2,7 @@ import Header from "../components/Header";
 
 import SearchBar from "../components/SearchBar";
 
-import ProductList from "../components/ProductList";
+import ProductsPanel from "../components/ProductsPanel";
 
 import CartPanel from "../components/CartPanel";
 
@@ -52,56 +52,6 @@ function HomePage(){
 
 
 
-    function renderProducts(){
-
-        if(loading){
-
-            return (
-                <h2>
-                    Loading products...
-                </h2>
-            );
-
-        }
-
-        if(error){
-
-            return (
-                <h2>
-                    Unable to load products.
-                    <br />
-                    Please try again.
-                </h2>
-            );
-
-        }
-
-        if(products.length === 0){
-
-            return (
-                <h2>
-                    No products found.
-                </h2>
-            );
-
-        }
-
-        return (
-            <ProductList
-
-                products={products}
-
-                disabled={actionPending}
-
-                onAdd={add}
-
-            />
-        );
-
-    }
-
-
-
 
     return (
 
@@ -134,7 +84,19 @@ function HomePage(){
 
 
 
-                    {renderProducts()}
+                    <ProductsPanel
+
+                        products={products}
+
+                        loading={loading}
+
+                        error={error}
+
+                        disabled={actionPending}
+
+                        onAdd={add}
+
+                    />
 
 
                 </section>

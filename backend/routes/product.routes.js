@@ -6,6 +6,10 @@ const controller =
 require("../controllers/product.controller");
 
 
+const asyncHandler =
+require("../utils/async-handler");
+
+
 
 const router =
 express.Router();
@@ -14,14 +18,14 @@ express.Router();
 
 router.get(
 "/search",
-controller.search
+asyncHandler(controller.search)
 );
 
 
 
 router.get(
 "/",
-controller.getAll
+asyncHandler(controller.getAll)
 );
 
 

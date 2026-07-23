@@ -6,6 +6,10 @@ const pool =
 require("../config/db");
 
 
+const asyncHandler =
+require("../utils/async-handler");
+
+
 
 const router =
 express.Router();
@@ -14,27 +18,17 @@ express.Router();
 
 router.get(
 "/",
-async (req,res,next)=>{
+asyncHandler(async (req,res)=>{
 
+    const [rows] =
+    await pool.query(
+        "SELECT id, name, price, stock FROM products"
+    );
 
-    try{
+    res.json(rows);
 
-        const [rows] =
-        await pool.query(
-            "SELECT id, name, price, stock FROM products"
-        );
-
-        res.json(rows);
-
-    }
-    catch(error){
-
-        next(error);
-
-    }
-
-
-});
+})
+);
 
 
 module.exports=router;
