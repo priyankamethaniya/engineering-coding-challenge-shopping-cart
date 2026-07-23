@@ -21,6 +21,10 @@ const errorMiddleware =
 require("./middleware/error.middleware");
 
 
+const initDb =
+require("./db/init");
+
+
 
 const app=express();
 
@@ -63,12 +67,25 @@ process.env.PORT || 3001;
 
 
 
-app.listen(PORT,()=>{
+initDb()
+.then(()=>{
 
+    app.listen(PORT,()=>{
 
-console.log(
-`Server running on ${PORT}`
-);
+        console.log(
+        `Server running on ${PORT}`
+        );
 
+    });
+
+})
+.catch((error)=>{
+
+    console.error(
+    "Failed to initialize database:",
+    error
+    );
+
+    process.exit(1);
 
 });

@@ -18,10 +18,10 @@ require("../utils/app-error");
 class CartService{
 
 
-    getCart(){
+    async getCart(){
 
 
-        return cartRepository.findAll();
+        return await cartRepository.findAll();
 
 
     }
@@ -50,7 +50,7 @@ class CartService{
 
 
         const existing =
-        cartRepository.findByProductId(
+        await cartRepository.findByProductId(
             productId
         );
 
@@ -77,10 +77,15 @@ class CartService{
         if(existing){
 
 
-            existing.quantity =
-            nextQuantity;
+            await cartRepository.updateQuantity(
+                productId,
+                nextQuantity
+            );
 
-            return existing;
+            return {
+                ...existing,
+                quantity: nextQuantity
+            };
 
 
         }
@@ -92,7 +97,7 @@ class CartService{
 
 
 
-        cartRepository.save(item);
+        await cartRepository.save(item);
 
 
 
@@ -103,10 +108,10 @@ class CartService{
 
 
 
-    remove(productId){
+    async remove(productId){
 
 
-        cartRepository.delete(productId);
+        await cartRepository.delete(productId);
 
 
     }
@@ -118,7 +123,7 @@ class CartService{
 
 
         const item =
-        cartRepository.findByProductId(
+        await cartRepository.findByProductId(
             productId
         );
 
@@ -136,7 +141,7 @@ class CartService{
 
         if(quantity<=0){
 
-            cartRepository.delete(
+            await cartRepository.delete(
                 productId
             );
 
@@ -164,7 +169,10 @@ class CartService{
 
 
 
-        item.quantity=quantity;
+        await cartRepository.updateQuantity(
+            productId,
+            quantity
+        );
 
 
     }
